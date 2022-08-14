@@ -37,4 +37,4 @@ top_gainers %>%
            sep = '\t') -> top_gainers
            
            
- write_csv(top_gainers,paste0('data/',Sys.Date(),'_top_gainers_500','.csv'))   
+ write_csv(top_gainers,paste0('water_quality_data/',Sys.Date(),'_top_gainers_500','.csv'))   
