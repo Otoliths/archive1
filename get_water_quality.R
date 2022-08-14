@@ -1,10 +1,3 @@
-path1 <- paste0("water_quality_data/",Sys.time(),".rds")
-
-water <- jsonlite::fromJSON("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999")
-
-saveRDS(water,path1)
-
-
 baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
 baseurl2 <- "http://xxfb.mwr.cn/portal/"
 query1 <- c("greatRiver","greatRsvr")
