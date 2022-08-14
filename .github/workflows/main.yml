@@ -14,23 +14,47 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
+jobs: 
+  autoscrape:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ubuntu-18.04
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@master
+      - name: install dependencies
+        run: sudo apt-get install libcurl4-openssl-dev libgeos-dev libudunits2-dev
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+    # Set-up R
+      - name: Install packages
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          R -e 'install.packages("jsonlite",dependencies = T)'
+        
+    # Run R script
+      - name: get_water_quality
+        run: Rscript get_water_quality.R
+    
+    # Add new files in data folder, commit along with other modified files, push
+      - name: push the water_quality_data to GitHub
+        run: |
+          git config --local user.email ly_ding@126.com
+          git config --local user.name Otoliths
+          git add water_quality_data
+          git commit -am "GH ACTION water quality $(date)"
+          git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+        
+        # Run R script
+      - name: get_hydrological
+        run: Rscript get_hydrological.R
+      
+ # Add new files in data folder, commit along with other modified files, push
+      - name: push the hydrological_data to GitHub
+        run: |
+         git config --local user.email ly_ding@126.com
+         git config --local user.name Otoliths
+         git add hydrological_data
+         git commit -am "GH ACTION hydrological $(date)"
+         git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+        
+        
+        
