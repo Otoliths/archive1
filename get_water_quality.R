@@ -3,7 +3,6 @@ baseurl2 <- "http://xxfb.mwr.cn/portal/"
 query1 <- c("greatRiver","greatRsvr")
 query2 <- c("vitalRiverInfo","vitalRsvrInfo","earlyWarningInfo","hydroinfoByDays","surpassWarningInfo")
 
-
 hydroSearch <- lapply(1:length(query1),function(x){
   jsonlite::fromJSON(paste0(baseurl1,query1[x]))
 })
@@ -22,4 +21,3 @@ hydrological <- list(greatRiver = hydroSearch[[1]],
 
 path2 <- paste0("hydrological_data/",Sys.time(), ".rds")
 saveRDS(hydrological,path2)
-
