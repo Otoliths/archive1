@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,7 +36,7 @@ jobs:
       run: |
         git config --local user.name Otoliths
         git config --local user.email "ly_ding@126.com"
-        git add data/*
+        git add water_quality_data/*
         git commit -am "GH ACTION Headlines $(date)"
         git push origin main
       env:
