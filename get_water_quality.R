@@ -1,7 +1,40 @@
-options(timeout=1000)
-if (!file.exists(paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))){
-  dir.create(paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))
-}
-path <- paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai"),"/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".json")
+#load libs
 
-try(download.file("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999",path),silent = T)
+library(tidyverse)
+library(rvest)
+library(janitor)
+
+#nse top gainers
+
+url <- 'https://www.moneycontrol.com/stocks/marketstats/nse-gainer/nifty-500_7/'
+
+# extract html 
+
+url_html <- read_html(url)
+
+#table extraction
+
+url_tables <- url_html %>% html_table(fill = TRUE)
+
+#extract relevant table
+
+top_gainers <- url_tables[[2]]
+
+#extract relevant columns
+
+top_gainers %>%
+  select(1:7) -> top_gainers
+
+top_gainers %>% 
+  clean_names() -> top_gainers
+
+top_gainers %>%
+  filter(!is.na(low)) -> top_gainers
+
+top_gainers %>%
+  separate(company_name,
+           into = 'company_name',
+           sep = '\t') -> top_gainers
+           
+           
+ write_csv(top_gainers,paste0('data/',Sys.Date(),'_top_gainers_500','.csv'))   
