@@ -25,6 +25,8 @@ jobs:
     - name: Install packages
       run: |
         R -e 'install.packages("jsonlite")'
+        R -e 'install.packages("curl")'
+        
     # Run R script
     - name: Scrape
       run: Rscript get_water_quality.R
