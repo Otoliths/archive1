@@ -1,6 +1,9 @@
-path <- paste0("water_quality_data/",Sys.time(),".json")
+path1 <- paste0("water_quality_data/",Sys.time(),".rds")
 
-download.file("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999",path)
+water <- jsonlite::fromJSON("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999")
+
+saveRDS(water,path1)
+
 
 baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
 baseurl2 <- "http://xxfb.mwr.cn/portal/"
@@ -23,9 +26,7 @@ hydrological <- list(greatRiver = hydroSearch[[1]],
                      earlyWarningInfo = portal[[3]],
                      hydroinfoByDays = portal[[4]],
                      surpassWarningInfo = portal[[5]])
-if (!file.exists(paste0("hydrological_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))){
-  dir.create(paste0("hydrological_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))
-}
-path <- paste0("hydrological_data/",Sys.time(), ".rds")
-saveRDS(hydrological,path)
+
+path2 <- paste0("hydrological_data/",Sys.time(), ".rds")
+saveRDS(hydrological,path2)
 
