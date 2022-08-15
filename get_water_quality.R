@@ -11,7 +11,7 @@ query2 <- c("vitalRiverInfo","vitalRsvrInfo","earlyWarningInfo","hydroinfoByDays
 
 
 hydroSearch <- lapply(1:length(query1),function(x){
-  jsonify::from_json(paste0(baseurl1,query1[x]))
+  jsonlite::fromJSON(paste0(baseurl1,query1[x]))
 })
 
 portal <- lapply(1:length(query2),function(x){
