@@ -26,6 +26,8 @@ jobs:
       run: |
         R -e 'install.packages("jsonify")'
         R -e 'install.packages("curl")'
+        R -e 'install.packages("jsonlite")'
+        
         
     # Run R script
     - name: Scrape
