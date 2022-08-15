@@ -1,8 +1,9 @@
-path1 <- paste0("water_quality_data/",Sys.time(),".rds")
+path <- paste0("water_quality_data/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".rds")
 
-water <- jsonify::from_json("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999")
+water <- jsonify::from_json("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999",fill_na = TRUE)
 
-saveRDS(water,path1)
+saveRDS(water,path)
+
 
 # baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
 # baseurl2 <- "http://xxfb.mwr.cn/portal/"
@@ -27,9 +28,9 @@ saveRDS(water,path1)
 #                      surpassWarningInfo = portal[[5]])
 
 
-hydrological <- list(greatRiver = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRiver"),
-                     greatRsvr = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRsvr"))
-
-
-path2 <- paste0("hydrological_data/",Sys.time(),".rds")
-saveRDS(hydrological,path2)
+# hydrological <- list(greatRiver = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRiver"),
+#                      greatRsvr = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRsvr"))
+# 
+# 
+# path2 <- paste0("hydrological_data/",Sys.time(),".rds")
+# saveRDS(hydrological,path2)
