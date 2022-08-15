@@ -4,27 +4,32 @@ water <- jsonify::from_json("http://106.37.208.244:10001/Home/GetSectionDataList
 
 saveRDS(water,path1)
 
-baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
-baseurl2 <- "http://xxfb.mwr.cn/portal/"
-query1 <- c("greatRiver","greatRsvr")
-query2 <- c("vitalRiverInfo","vitalRsvrInfo","earlyWarningInfo","hydroinfoByDays","surpassWarningInfo")
+# baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
+# baseurl2 <- "http://xxfb.mwr.cn/portal/"
+# query1 <- c("greatRiver","greatRsvr")
+# query2 <- c("vitalRiverInfo","vitalRsvrInfo","earlyWarningInfo","hydroinfoByDays","surpassWarningInfo")
 
 
-hydroSearch <- lapply(1:length(query1),function(x){
-  jsonlite::fromJSON(paste0(baseurl1,query1[x]))
-})
+# hydroSearch <- lapply(1:length(query1),function(x){
+#   jsonify::from_json(paste0(baseurl1,query1[x]))
+# })
+# 
+# portal <- lapply(1:length(query2),function(x){
+#   jsonify::from_json(paste0(baseurl2,query2[x]))
+# })
+# 
+# hydrological <- list(greatRiver = hydroSearch[[1]],
+#                      greatRsvr = hydroSearch[[2]],
+#                      vitalRiverInfo = portal[[1]],
+#                      vitalRsvrInfo = portal[[2]],
+#                      earlyWarningInfo = portal[[3]],
+#                      hydroinfoByDays = portal[[4]],
+#                      surpassWarningInfo = portal[[5]])
 
-portal <- lapply(1:length(query2),function(x){
-  jsonify::from_json(paste0(baseurl2,query2[x]))
-})
 
-hydrological <- list(greatRiver = hydroSearch[[1]],
-                     greatRsvr = hydroSearch[[2]],
-                     vitalRiverInfo = portal[[1]],
-                     vitalRsvrInfo = portal[[2]],
-                     earlyWarningInfo = portal[[3]],
-                     hydroinfoByDays = portal[[4]],
-                     surpassWarningInfo = portal[[5]])
+hydrological <- list(greatRiver = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRiver"),
+                     greatRsvr = jsonify::from_json("http://xxfb.mwr.cn/hydroSearch/greatRsvr"))
+
 
 path2 <- paste0("hydrological_data/",Sys.time(),".rds")
 saveRDS(hydrological,path2)
