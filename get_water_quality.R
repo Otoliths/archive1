@@ -1,3 +1,7 @@
+if(!file.exists("water_quality_data")){
+  dir.create("water_quality_data")
+}
+
 #path <- paste0("water_quality_data/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".rds")
 path <- paste0("water_quality_data/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".json")
 #water <- jsonify::from_json("http://106.37.208.244:10001/Home/GetSectionDataList?&page=1&rows=9999",fill_na = TRUE)
